@@ -1,0 +1,820 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Медцентр «Медина» — Улица Абая, 23с, Абай, Карасайский район</title>
+  <meta name="description" content="Медицинский центр Медина — качественная медицинская помощь в Абае, Алматинская область. УЗИ, терапия, педиатрия, лабораторная диагностика." />
+  <meta name="keywords" content="медицинский центр, Медина, Абай, Карасайский район, УЗИ, терапия, педиатрия, анализы, врачи" />
+  <link rel="canonical" href="https://medina.example" />
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "MedicalOrganization",
+    "name": "Медицинский центр «Медина»",
+    "description": "Современная диагностика, внимательные специалисты и индивидуальный подход.",
+    "url": "https://medina.example",
+    "telephone": "+7-700-100-05-78",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Улица Абая, 23с",
+      "addressLocality": "Абай",
+      "addressRegion": "Алматинская область",
+      "postalCode": "040905",
+      "addressCountry": "KZ"
+    },
+    "openingHours": [
+      "Mo-Fr 08:00-19:00",
+      "Sa 09:00-14:00"
+    ],
+    "medicalSpecialty": [
+      "Ultrasound",
+      "Therapy",
+      "Pediatrics",
+      "Laboratory"
+    ],
+    "priceRange": "$$"
+  }
+  </script>
+  
+  <style>
+    /* --- Reset --- */
+    *{box-sizing:border-box;margin:0;padding:0}
+    html,body,#app{height:100%}
+    body{font-family:Inter,system-ui,Segoe UI,Roboto,'Helvetica Neue',Arial;line-height:1.4;color:#0f172a;background:linear-gradient(180deg,#f8fafc,#eef2ff);overflow-x:hidden}
+    a{color:inherit;text-decoration:none}
+
+    /* --- Preloader --- */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(180deg, #f8fafc, #eef2ff);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease, visibility 0.5s ease;
+    }
+    
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+    
+    .preloader-logo {
+      width: 120px;
+      height: 120px;
+      animation: pulse 1.5s infinite alternate, rotate 3s linear infinite;
+    }
+    
+    @keyframes pulse {
+      0% { transform: scale(0.9); }
+      100% { transform: scale(1.1); }
+    }
+    
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* --- Layout --- */
+    header{position:fixed;inset:0 0 auto 0;z-index:40;background:rgba(255,255,255,0.6);backdrop-filter:blur(6px);box-shadow:0 6px 18px rgba(2,6,23,0.05)}
+    .container{max-width:1200px;margin:0 auto;padding:1rem}
+    nav{display:flex;align-items:center;gap:1rem;justify-content:space-between}
+
+    /* --- Logo --- */
+    .logo{display:flex;gap:.75rem;align-items:center}
+    .logo-img{width:56px;height:56px;border-radius:12px}
+    .brand{font-weight:700;font-size:1.05rem}
+    .tag{font-size:.8rem;color:#475569}
+
+    /* --- Hero --- */
+    .hero{padding:120px 0 40px;position:relative}
+    .hero-grid{display:grid;grid-template-columns:1fr 420px;gap:2rem;align-items:center}
+    .hero-title{font-size:2.1rem;line-height:1.05;color:#0b1220}
+    .hero-sub{margin-top:.5rem;color:#334155}
+    .cta{margin-top:1rem;display:flex;gap:.75rem}
+    .btn{padding:.65rem 1rem;border-radius:10px;border:0;font-weight:600;cursor:pointer;transition:all 0.3s ease}
+    .btn-primary{background:linear-gradient(90deg,#dc2626,#b91c1c);color:#fff}
+    .btn-primary:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(220, 38, 38, 0.4)}
+    .btn-ghost{background:transparent;border:2px solid rgba(15,23,42,0.06)}
+    .btn-ghost:hover{background:rgba(15,23,42,0.03);border-color:rgba(15,23,42,0.1)}
+
+    /* --- Card with address and contacts --- */
+    .card{background:#fff;padding:1rem;border-radius:14px;box-shadow:0 12px 30px rgba(2,6,23,0.06);position:relative;overflow:hidden;transition:transform 0.4s ease, box-shadow 0.4s ease}
+    .card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,23,0.1)}
+    .address{font-weight:600}
+    .small{font-size:.9rem;color:#475569}
+
+    /* --- Services --- */
+    .services{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:1rem;margin:2rem 0}
+    .service{background:linear-gradient(180deg,#ffffff,#fbfdff);padding:1rem;border-radius:12px;box-shadow:0 10px 24px rgba(2,6,23,0.03);transform:translateY(0);transition:transform .45s cubic-bezier(.2,.9,.3,1), box-shadow 0.4s ease}
+    .service:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 15px 30px rgba(2,6,23,0.08)}
+    
+    /* Добавлены стили для изображения в карточке услуги */
+    .service img {
+        width: 100%; 
+        height: 120px; 
+        object-fit: cover; 
+        border-radius: 8px; 
+        margin-bottom: 0.75rem;
+    }
+
+    /* --- Animated counters --- */
+    .counters{display:flex;gap:1rem;margin-top:1rem}
+    .counter{background:linear-gradient(180deg,#fff,#f7fbff);padding:1rem;border-radius:10px;text-align:center;min-width:110px;transition:transform 0.3s ease, box-shadow 0.3s ease}
+    .counter:hover{transform:translateY(-5px);box-shadow:0 10px 20px rgba(2,6,23,0.08)}
+    .num{font-weight:800;font-size:1.45rem}
+    .lbl{font-size:.85rem;color:#475569}
+
+    /* --- Floating animations & shapes --- */
+    .float-blob{position:absolute;pointer-events:none;opacity:.22;mix-blend-mode:screen;filter:blur(20px)}
+
+    /* --- Footer --- */
+    footer{padding:2rem 0;margin-top:2rem}
+
+    /* --- Language toggle --- */
+    .lang-switch{display:flex;gap:.5rem;align-items:center}
+    .lang-btn{padding:.35rem .6rem;border-radius:8px;border:0;background:transparent;cursor:pointer;transition:all 0.2s ease}
+    .lang-btn.active{background:#fee2e2;color:#991b1b}
+    .lang-btn:hover:not(.active){background:rgba(220, 38, 38, 0.1)}
+
+    /* --- Responsive --- */
+    @media (max-width:880px){.hero-grid{grid-template-columns:1fr;}.card{margin-top:1rem}}
+    @media (max-width:640px){
+      .counters{flex-wrap:wrap;justify-content:center}
+      .cta{flex-direction:column}
+      .btn{width:100%}
+    }
+
+    /* --- Micro-interactions --- */
+    .reveal{opacity:0;transform:translateY(18px);transition:all .7s cubic-bezier(.2,.9,.3,1)}
+    .reveal.show{opacity:1;transform:translateY(0)}
+
+    /* --- Marquee --- */
+    .marquee{overflow:hidden;white-space:nowrap}
+    .marquee .track{display:inline-block;padding-left:100%;animation:marq 18s linear infinite}
+    @keyframes marq{0%{transform:translateX(0)}100%{transform:translateX(-100%)}}
+
+    /* --- Small helpers --- */
+    .muted{color:#64748b}
+    
+    /* --- Modal --- */
+    .modal{display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:100;align-items:center;justify-content:center}
+    .modal-content{background:white;padding:2rem;border-radius:14px;max-width:500px;width:90%;position:relative;transition:transform 0.3s ease}
+    .modal-content:hover{transform:translateY(-5px)}
+    .close-modal{position:absolute;top:1rem;right:1rem;background:none;border:none;font-size:1.5rem;cursor:pointer}
+    .form-group{margin-bottom:1rem}
+    .form-group label{display:block;margin-bottom:.5rem;font-weight:600}
+    .form-group input,.form-group select,.form-group textarea{width:100%;padding:.75rem;border:1px solid #ddd;border-radius:8px;font-family:inherit}
+    
+    /* --- Mobile menu --- */
+    .mobile-menu-btn{display:none;background:none;border:none;font-size:1.5rem;cursor:pointer}
+    @media (max-width:768px){
+      .mobile-menu-btn{display:block}
+      nav{flex-wrap:wrap}
+      .nav-links{display:none;width:100%;order:3;margin-top:1rem}
+      .nav-links.active{display:flex;flex-direction:column;gap:.5rem}
+    }
+    
+    /* --- Calendar styles --- */
+    .calendar{width:100%;border-collapse:collapse;margin:1rem 0}
+    .calendar th, .calendar td{text-align:center;padding:0.5rem;border:1px solid #e5e7eb}
+    .calendar th{background:#fef2f2;font-weight:600;color:#991b1b}
+    .calendar td{height:40px;cursor:pointer;transition:background 0.2s}
+    .calendar td:hover{background:#fef2f2}
+    .calendar td.available{background:#fef2f2;color:#991b1b;font-weight:600}
+    .calendar td.selected{background:#dc2626;color:white}
+    .calendar td.unavailable{color:#9ca3af;cursor:not-allowed}
+    
+    /* --- Checkbox styles --- */
+    .checkbox-group{display:flex;align-items:flex-start;gap:0.5rem;margin:1rem 0}
+    .checkbox-group input[type="checkbox"]{margin-top:0.2rem}
+    .checkbox-group label{font-size:0.9rem;line-height:1.4}
+    
+    /* --- Booking card --- */
+    .booking-card{background:#fff;padding:1.5rem;border-radius:14px;box-shadow:0 12px 30px rgba(2,6,23,0.06);margin-top:2rem;transition:transform 0.4s ease, box-shadow 0.4s ease; max-width: 600px; margin-left: auto; margin-right: auto;}
+    .booking-card:hover{transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,23,0.1)}
+    .booking-card h3{margin-bottom:1rem;color:#991b1b; font-size: 1.3rem;}
+    
+    /* --- Time slots --- */
+    .time-slots{display:flex;flex-wrap:wrap;gap:0.5rem;margin:1rem 0}
+    .time-slot{padding:0.5rem 1rem;border:1px solid #e5e7eb;border-radius:8px;cursor:pointer;transition:all 0.2s}
+    .time-slot:hover{background:#fef2f2;border-color:#fecaca}
+    .time-slot.selected{background:#dc2626;color:white;border-color:#dc2626}
+    
+    /* --- Section with animation --- */
+    .section-card {background:#fff;padding:1.5rem;border-radius:14px;box-shadow:0 12px 30px rgba(2,6,23,0.06);margin-top:2rem;transition:transform 0.4s ease, box-shadow 0.4s ease}
+    .section-card:hover {transform:translateY(-8px);box-shadow:0 20px 40px rgba(2,6,23,0.1)}
+    
+    /* --- WhatsApp Button --- */
+    .whatsapp-button {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 60px;
+      height: 60px;
+      background-color: #25D366;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-shadow: 0 4px 12px rgba(37, 211, 102, 0.4);
+      z-index: 1000;
+      transition: all 0.3s ease;
+      animation: pulse-whatsapp 2s infinite;
+    }
+    
+    .whatsapp-button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 16px rgba(37, 211, 102, 0.6);
+    }
+    
+    .whatsapp-button svg {
+      width: 32px;
+      height: 32px;
+      fill: white;
+    }
+    
+    @keyframes pulse-whatsapp {
+      0% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(37, 211, 102, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0); }
+    }
+  </style>
+</head>
+<body>
+  <div class="preloader" id="preloader">
+    <img src="Logo.png" alt="Медицинский центр Медина" class="preloader-logo">
+  </div>
+
+  <div id="app">
+    <svg class="float-blob" style="right:-80px;top:10%;width:420px;height:420px;" viewBox="0 0 600 600" aria-hidden="true">
+      <g fill="none" fill-rule="evenodd">
+        <circle cx="300" cy="300" r="300" fill="#dc2626" />
+      </g>
+    </svg>
+
+    <header>
+      <div class="container">
+        <nav>
+          <div class="logo">
+            <img src="Logo.png" alt="Медицинский центр Медина" class="logo-img">
+            <div>
+              <div class="brand" data-i18n="brand">Медицинский центр «Медина»</div>
+              <div class="tag muted" data-i18n="tag">Качественная помощь рядом с вами</div>
+            </div>
+          </div>
+
+          <button class="mobile-menu-btn" aria-label="Открыть меню" aria-expanded="false">☰</button>
+          
+          <div class="nav-links" style="display:flex;align-items:center;gap:1rem">
+            <div class="lang-switch" role="tablist" aria-label="Выбор языка">
+              <button class="lang-btn active" data-lang="ru" aria-pressed="true">Рус</button>
+              <button class="lang-btn" data-lang="kk" aria-pressed="false">Қаз</button>
+            </div>
+            <div class="muted" style="font-size:.9rem">☎ +7 (700) 100-05-78</div>
+          </div>
+        </nav>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <div class="hero-grid">
+          <div>
+            <h1 class="hero-title reveal" data-i18n="hero_title">Добро пожаловать в Медцентр «Медина»</h1>
+            <p class="hero-sub reveal" data-i18n="hero_sub">Современная диагностика, внимательные специалисты и индивидуальный подход.</p>
+            <div class="cta reveal">
+              <button class="btn btn-primary" id="bookBtn" data-i18n="book">Записаться</button>
+              <div style="text-align: center;">
+                <button class="btn btn-ghost" id="callBtn" data-i18n="call">Позвонить</button>
+                <div style="margin-top: 8px; font-size: 0.8rem; color: #64748b;">+7 (700) 100-05-78</div>
+              </div>
+            </div>
+
+            <div class="counters reveal" style="margin-top:1.25rem">
+              <div class="counter">
+                <div class="num" data-target="12500">0</div>
+                <div class="lbl" data-i18n="patients">Пациентов</div>
+              </div>
+              <div class="counter">
+                <div class="num" data-target="12">0</div>
+                <div class="lbl" data-i18n="years">Лет на рынке</div>
+              </div>
+              <div class="counter">
+                <div class="num" data-target="42">0</div>
+                <div class="lbl" data-i18n="specialists">Специалистов</div>
+              </div>
+            </div>
+
+            <div style="margin-top:1.25rem" class="reveal">
+              <div class="marquee"><div class="track" data-i18n="marquee">Акция: бесплатная консультация для пенсионеров — Только в этом месяце!</div></div>
+            </div>
+          </div>
+
+          <aside class="card reveal">
+            <h3 data-i18n="contact">Контактная информация</h3>
+            <p class="address" id="address" data-address>Улица Абая, 23с. Абай, Карасайский район, Алматинская область 040905</p>
+            <p class="small" data-i18n="working">Режим работы: Пн–Пт 08:00–19:00, Сб 09:00–14:00</p>
+            <div style="margin-top:1rem;display:flex;gap:.5rem;align-items:center">
+              <button class="btn btn-primary" style="padding:.5rem .7rem" onclick="openMap()" data-i18n="map">Показать на карте</button>
+              <button class="btn btn-ghost" style="padding:.5rem .7rem" onclick="copyAddress()" data-i18n="copy">Копировать адрес</button>
+            </div>
+            <div style="margin-top:1rem;display:flex;gap:.5rem;align-items:center">
+              <img src="doc_photo.jpg" alt="Фотография директора Ниязовой А." width="64" height="64" style="border-radius:8px;object-fit:cover;"/>
+              <div>
+                <div class="small" data-i18n="doc">Директор: Ниязова А.</div>
+                <div class="small muted" data-i18n="cert">Специалисты с действующими сертификатами</div>
+              </div>
+            </div>
+          </aside>
+        </div>
+
+        <canvas id="particles" style="position:absolute;left:0;right:0;top:0;bottom:0;pointer-events:none;z-index:0"></canvas>
+      </section>
+
+      <section>
+        <h2 class="reveal" data-i18n="services_title">Наши услуги</h2>
+        <p class="muted reveal" data-i18n="services_sub">Диагностика, консультации, вакцинация и поддерживающее лечение</p>
+
+        <div class="services" aria-live="polite">
+          <div class="service reveal">
+            <img src="uzi_service.jpg" alt="Изображение ультразвуковой диагностики" />
+            <h4 data-i18n="srv1">Ультразвуковая диагностика (УЗИ)</h4>
+            <p class="small" data-i18n="srv1_desc">Современное оборудование и опытные врачи.</p>
+          </div>
+          <div class="service reveal">
+            <img src="therapy_service.jpg" alt="Изображение терапевтического лечения" />
+            <h4 data-i18n="srv2">Терапия</h4>
+            <p class="small" data-i18n="srv2_desc">Консультации и динамическое наблюдение пациентов.</p>
+          </div>
+          <div class="service reveal">
+            <img src="pediatrics_service.jpg" alt="Изображение детского врача-педиатра" />
+            <h4 data-i18n="srv3">Педиатрия</h4>
+            <p class="small" data-i18n="srv3_desc">Профессиональная помощь детям всех возрастов.</p>
+          </div>
+          <div class="service reveal">
+            <img src="lab_service.jpg" alt="Изображение лабораторных анализов" />
+            <h4 data-i18n="srv4">Лабораторная диагностика</h4>
+            <p class="small" data-i18n="srv4_desc">Быстрые и точные анализы на месте.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="section-card reveal">
+        <h2 class="reveal" data-i18n="about_title">О центре</h2>
+        <p class="muted reveal" data-i18n="about_text">Медицинский центр «Медина» предоставляет широкий спектр услуг для семей и взрослых. Наша цель — доступная и качественная медицина для жителей Карасайского района.</p>
+      </section>
+
+      <section class="booking-card reveal">
+        <h3 data-i18n="booking_title">Запись на прием</h3>
+        <form id="bookingFormInline" action="https://formspree.io/f/xqaybvll" method="POST">
+          <input type="hidden" name="_subject" value="Запись через календарь - Медина">
+          <input type="hidden" id="selectedDate" name="selected_date">
+          <input type="hidden" id="selectedTime" name="selected_time">
+          
+          <div class="form-group">
+            <label for="serviceInline" data-i18n="form_service">Услуга</label>
+            <select id="serviceInline" name="service" required>
+              <option value="" data-i18n="form_select">Выберите услугу</option>
+              <option value="uzi" data-i18n="srv1">Ультразвуковая диагностика (УЗИ)</option>
+              <option value="therapy" data-i18n="srv2">Терапия</option>
+              <option value="pediatrics" data-i18n="srv3">Педиатрия</option>
+              <option value="lab" data-i18n="srv4">Лабораторная диагностика</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label data-i18n="form_date">Выберите дату</label>
+            <div id="calendarContainer"></div>
+          </div>
+          
+          <div class="form-group">
+            <label data-i18n="form_time">Выберите время</label>
+            <div class="time-slots" id="timeSlots"></div>
+          </div>
+          
+          <div class="form-group">
+            <label for="nameInline" data-i18n="form_name">Ваше имя</label>
+            <input type="text" id="nameInline" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phoneInline" data-i18n="form_phone">Телефон</label>
+            <input type="tel" id="phoneInline" name="phone" required>
+          </div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="privacyInline" name="privacy" required>
+            <label for="privacyInline" data-i18n="form_privacy">Я согласен на обработку персональных данных и подтверждаю, что ознакомлен с политикой конфиденциальности</label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" data-i18n="form_submit">Записаться на прием</button>
+        </form>
+      </section>
+
+      <section class="section-card reveal">
+        <h2 data-i18n="contact_title">Контакты</h2>
+        <p class="muted">Улица Абая, 23с. Абай, Карасайский район, Алматинская область 040905</p>
+        <p class="muted">Email: medina_medical@mail.ru</p>
+      </section>
+
+      <footer>
+        <div class="container">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:1rem;flex-wrap:wrap">
+            <div class="muted">© «Медина» — Все права защищены</div>
+            <div class="muted">Разработка — <a href="https://asaitech.kz" target="_blank" style="color: #64748b; text-decoration: none; border-bottom: 1px dashed #64748b; padding-bottom: 1px; transition: all 0.3s ease;" onmouseover="this.style.color='#dc2626'; this.style.borderBottomColor='#dc2626'" onmouseout="this.style.color='#64748b'; this.style.borderBottomColor='#64748b'">ASAI Tech</a></div>
+          </div>
+        </div>
+      </footer>
+    </main>
+    
+    <a href="https://wa.me/77001000578" class="whatsapp-button" target="_blank" aria-label="Написать в WhatsApp">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512">
+        <path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-32.6-16.3-54-29.1-75.5-66-5.7-9.8 5.7-9.1 16.3-30.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 35.2 15.2 49 16.5 66.6 13.9 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/>
+      </svg>
+    </a>
+    
+    <div id="bookingModal" class="modal" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+      <div class="modal-content">
+        <button class="close-modal" aria-label="Закрыть окно">×</button>
+        <h2 id="modalTitle" data-i18n="modal_title">Запись на прием</h2>
+        <form id="bookingForm" action="https://formspree.io/f/xqaybvll" method="POST">
+          <input type="hidden" name="_subject" value="Новая запись с сайта Медина">
+          
+          <div class="form-group">
+            <label for="name" data-i18n="form_name">Ваше имя</label>
+            <input type="text" id="name" name="name" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="phone" data-i18n="form_phone">Телефон</label>
+            <input type="tel" id="phone" name="phone" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="service" data-i18n="form_service">Услуга</label>
+            <select id="service" name="service" required>
+              <option value="" data-i18n="form_select">Выберите услугу</option>
+              <option value="uzi" data-i18n="srv1">Ультразвуковая диагностика (УЗИ)</option>
+              <option value="therapy" data-i18n="srv2">Терапия</option>
+              <option value="pediatrics" data-i18n="srv3">Педиатрия</option>
+              <option value="lab" data-i18n="srv4">Лабораторная диагностика</option>
+            </select>
+          </div>
+          
+          <div class="form-group">
+            <label for="date" data-i18n="form_date">Предпочтительная дата</label>
+            <input type="date" id="date" name="date" required>
+          </div>
+          
+          <div class="form-group">
+            <label for="message" data-i18n="form_message">Сообщение (необязательно)</label>
+            <textarea id="message" name="message" rows="3"></textarea>
+          </div>
+          
+          <div class="checkbox-group">
+            <input type="checkbox" id="privacy" name="privacy" required>
+            <label for="privacy" data-i18n="form_privacy">Я согласен на обработку персональных данных и подтверждаю, что ознакомлен с политикой конфиденциальности</label>
+          </div>
+          
+          <button type="submit" class="btn btn-primary" data-i18n="form_submit">Отправить заявку</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Preloader functionality
+    window.addEventListener('load', function() {
+      const preloader = document.getElementById('preloader');
+      setTimeout(function() {
+        preloader.classList.add('hidden');
+      }, 1500);
+    });
+
+    /* --- Simple bilingual dictionary (Russian / Kazakh) --- */
+    const i18n = {
+      ru: {
+        brand: 'Медицинский центр «Медина»',
+        tag: 'Качественная помощь рядом с вами',
+        hero_title: 'Добро пожаловать в Медцентр «Медина»',
+        hero_sub: 'Современная диагностика, внимательные специалисты и индивидуальный подход.',
+        book: 'Записаться',
+        call: 'Позвонить',
+        patients: 'Пациентов',
+        years: 'Лет на рынке',
+        specialists: 'Специалистов',
+        marquee: 'Акция: бесплатная консультация для пенсионеров — Только в этом месяце!',
+        contact: 'Контактная информация',
+        working: 'Режим работы: Пн–Пт 08:00–19:00, Сб 09:00–14:00',
+        map: 'Показать на карте',
+        copy: 'Копировать адрес',
+        doc: 'Директор: Ниязова А.',
+        cert: 'Специалисты с действующими сертификатами',
+        services_title: 'Наши услуги',
+        services_sub: 'Диагностика, консультации, вакцинация и поддерживающее лечение',
+        srv1: 'Ультразвуковая диагностика (УЗИ)',
+        srv1_desc: 'Современное оборудование и опытные врачи.',
+        srv2: 'Терапия',
+        srv2_desc: 'Консультации и динамическое наблюдение пациентов.',
+        srv3: 'Педиатрия',
+        srv3_desc: 'Профессиональная помощь детям всех возрастов.',
+        srv4: 'Лабораторная диагностика',
+        srv4_desc: 'Быстрые и точные анализы на месте.',
+        about_title: 'О центре',
+        about_text: 'Медицинский центр «Медина» предоставляет широкий спектр услуг для семей и взрослых. Наша цель — доступная и качественная медицина для жителей Карасайского района.',
+        contact_title: 'Контакты',
+        modal_title: 'Запись на прием',
+        booking_title: 'Запись на прием',
+        form_name: 'Ваше имя',
+        form_phone: 'Телефон',
+        form_service: 'Услуга',
+        form_select: 'Выберите услугу',
+        form_date: 'Предпочтительная дата',
+        form_time: 'Выберите время',
+        form_message: 'Сообщение (необязательно)',
+        form_submit: 'Отправить заявку',
+        form_privacy: 'Я согласен на обработку персональных данных и подтверждаю, что ознакомлен с политикой конфиденциальности'
+      },
+      kk: {
+        brand: '«Медина» медициналық орталығы',
+        tag: 'Сізге жақын сапалы көмек',
+        hero_title: '«Медина» медициналық орталығына қош келдіңіз',
+        hero_sub: 'Қазіргі заманғы диагностика, қамқор мамандар және жеке тәсіл.',
+        book: 'Уақыт алу',
+        call: 'Қоңырау шалу',
+        patients: 'Науқастар',
+        years: 'Жыл жұмыс істейді',
+        specialists: 'Мамандар',
+        marquee: 'Науқастарға арналған акция: зейнеткерлерге тегін кеңес — осы айда ғана!',
+        contact: 'Байланыс ақпараттары',
+        working: 'Жұмыс уақыты: Дс–Жм 08:00–19:00, Сб 09:00–14:00',
+        map: 'Картаны көрсету',
+        copy: 'Мекенжайды көшіру',
+        doc: 'Директор: Ниязова А.',
+        cert: 'Сертификаты бар мамандар',
+        services_title: 'Қызметтеріміз',
+        services_sub: 'Диагностика, кеңестер, вакцинация және күтім',
+        srv1: 'Ультрадыбыстық диагностика (УДЗ)',
+        srv1_desc: 'Қазіргі жабдықтар мен тәжірибелі дәрігерлер.',
+        srv2: 'Терапия',
+        srv2_desc: 'Кеңестер және пациенттерді бақылау.',
+        srv3: 'Педиатрия',
+        srv3_desc: 'Барлық жас балаларға кәсіби көмектесу.',
+        srv4: 'Лабораториялық диагностика',
+        srv4_desc: 'Жылдам және дәл талдаулар.',
+        about_title: 'Орталық туралы',
+        about_text: '«Медина» медициналық орталығы отбасылар мен ересектерге кең ауқымды қызмет көрсетеді. Біздің мақсатымыз — Қарасай ауданы тұрғындарына қолжетімді және сапалы медицина.',
+        contact_title: 'Байланыс',
+        modal_title: 'Қабылдауға жазылу',
+        booking_title: 'Қабылдауға жазылу',
+        form_name: 'Сіздің атыңыз',
+        form_phone: 'Телефон',
+        form_service: 'Қызмет',
+        form_select: 'Қызметті таңдаңыз',
+        form_date: 'Үйлесімді күн',
+        form_time: 'Уақытты таңдаңыз',
+        form_message: 'Хабарлама (міндетті емес)',
+        form_submit: 'Өтініш жіберу',
+        form_privacy: 'Мен жеке деректерді өңдеуге келіспін және құпиялылық саясатымен танысқанымды растаймын'
+      }
+    };
+
+    // apply language strings
+    function applyLang(code){
+      document.querySelectorAll('[data-i18n]').forEach(el=>{
+        const key = el.getAttribute('data-i18n');
+        if(i18n[code] && i18n[code][key]) el.textContent = i18n[code][key];
+      });
+      const addr = document.querySelector('[data-address]');
+      if(addr){ addr.setAttribute('aria-label', addr.textContent); }
+    }
+
+    // init language toggle
+    document.querySelectorAll('.lang-btn').forEach(btn=>{
+      btn.addEventListener('click',()=>{
+        document.querySelectorAll('.lang-btn').forEach(b=>{
+          b.classList.remove('active');
+          b.setAttribute('aria-pressed', 'false');
+        });
+        btn.classList.add('active');
+        btn.setAttribute('aria-pressed', 'true');
+        applyLang(btn.dataset.lang);
+      });
+    });
+
+    // default ru
+    applyLang('ru');
+
+    // copy address helper
+    function copyAddress(){
+      const text = document.querySelector('[data-address]').textContent;
+      navigator.clipboard?.writeText(text).then(()=>{
+        alert('Адрес скопирован');
+      }).catch(()=>alert('Не удалось скопировать'));
+    }
+    function openMap(){
+      const text = encodeURIComponent(document.querySelector('[data-address]').textContent);
+      window.open('https://www.google.com/maps/search/?api=1&query='+text,'_blank');
+    }
+
+    // reveal on scroll
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting) e.target.classList.add('show'); });
+    },{threshold:.12});
+    document.querySelectorAll('.reveal').forEach(n=>io.observe(n));
+
+    // animated counters
+    function runCounters(){
+      document.querySelectorAll('.num').forEach(el=>{
+        const target = +el.dataset.target || 0;
+        let cur = 0; const step = Math.max(1, Math.round(target/120));
+        const t = setInterval(()=>{
+          cur += step;
+          if(cur>=target){ el.textContent = target; clearInterval(t); }
+          else el.textContent = cur.toLocaleString();
+        },12);
+      });
+    }
+    // run when visible
+    const cntObserver = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ runCounters(); cntObserver.disconnect(); } });
+    },{threshold:.3});
+    document.querySelectorAll('.counters').forEach(n=>cntObserver.observe(n));
+
+    // small particle system (canvas)
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let W, H, particles=[];
+    function resize(){ W = canvas.width = innerWidth; H = canvas.height = innerHeight; }
+    window.addEventListener('resize', resize); resize();
+    function make(){ particles = Array.from({length: Math.max(20, Math.round(W/80))}).map(()=>({
+      x: Math.random()*W, y: Math.random()*H, r: Math.random()*2+1, vx:(Math.random()-.5)/1.5, vy:(Math.random()-.5)/1.5, alpha:Math.random()*0.6+0.2
+    })); }
+    make();
+    function frame(){ ctx.clearRect(0,0,W,H);
+      for(let p of particles){ p.x += p.vx; p.y += p.vy; if(p.x<0) p.x=W; if(p.x>W) p.x=0; if(p.y<0) p.y=H; if(p.y>H) p.y=0;
+        ctx.beginPath(); ctx.globalAlpha = p.alpha; ctx.fillStyle = '#dc2626'; ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+      }
+      ctx.globalAlpha = .08; for(let i=0;i<particles.length;i++){ for(let j=i+1;j<particles.length;j++){ const a=particles[i], b=particles[j]; const dx=a.x-b.x, dy=a.y-b.y; const d=Math.sqrt(dx*dx+dy*dy); if(d<120){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle='#dc2626'; ctx.lineWidth=1; ctx.stroke(); } }}
+      requestAnimationFrame(frame);
+    }
+    frame();
+
+    // Modal functionality
+    const modal = document.getElementById('bookingModal');
+    const bookBtn = document.getElementById('bookBtn');
+    const closeModal = document.querySelector('.close-modal');
+    const bookingForm = document.getElementById('bookingForm');
+    
+    function openModal() {
+      modal.style.display = 'flex';
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModalFunc() {
+      modal.style.display = 'none';
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = 'auto';
+    }
+    
+    bookBtn.addEventListener('click', openModal);
+    closeModal.addEventListener('click', closeModalFunc);
+    
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+      if (e.target === modal) {
+        closeModalFunc();
+      }
+    });
+
+    // Mobile menu toggle
+    const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+    const navLinks = document.querySelector('.nav-links');
+    
+    mobileMenuBtn.addEventListener('click', () => {
+      const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+      mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+      navLinks.classList.toggle('active');
+    });
+
+    // Calendar functionality
+    function generateCalendar() {
+      const container = document.getElementById('calendarContainer');
+      const today = new Date();
+      const currentMonth = today.getMonth();
+      const currentYear = today.getFullYear();
+      
+      // Get first day of month and number of days
+      const firstDay = new Date(currentYear, currentMonth, 1).getDay();
+      const daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+      
+      // Adjust for Monday as first day of week
+      const adjustedFirstDay = firstDay === 0 ? 6 : firstDay - 1;
+      
+      // Create calendar table
+      let calendarHTML = '<table class="calendar"><thead><tr>';
+      
+      // Add day headers
+      const days = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+      days.forEach(day => {
+        calendarHTML += `<th>${day}</th>`;
+      });
+      
+      calendarHTML += '</tr></thead><tbody><tr>';
+      
+      // Add empty cells for days before the first day of the month
+      for (let i = 0; i < adjustedFirstDay; i++) {
+        calendarHTML += '<td class="unavailable"></td>';
+      }
+      
+      // Add days of the month
+      for (let day = 1; day <= daysInMonth; day++) {
+        const date = new Date(currentYear, currentMonth, day);
+        const isToday = day === today.getDate() && currentMonth === today.getMonth();
+        const isAvailable = date.getDay() !== 0 && date >= today; // Not Sunday and not in the past
+        
+        if (isAvailable) {
+          calendarHTML += `<td class="available" data-date="${currentYear}-${currentMonth+1}-${day}">${day}</td>`;
+        } else {
+          calendarHTML += `<td class="unavailable">${day}</td>`;
+        }
+        
+        // Start new row after Saturday
+        if ((adjustedFirstDay + day) % 7 === 0 && day !== daysInMonth) {
+          calendarHTML += '</tr><tr>';
+        }
+      }
+      
+      // Add empty cells for days after the last day of the month
+      const totalCells = adjustedFirstDay + daysInMonth;
+      const remainingCells = 7 - (totalCells % 7);
+      if (remainingCells < 7) {
+        for (let i = 0; i < remainingCells; i++) {
+          calendarHTML += '<td class="unavailable"></td>';
+        }
+      }
+      
+      calendarHTML += '</tr></tbody></table>';
+      container.innerHTML = calendarHTML;
+      
+      // Add click event to available dates
+      container.querySelectorAll('.available').forEach(cell => {
+        cell.addEventListener('click', function() {
+          // Remove selected class from all cells
+          container.querySelectorAll('.available').forEach(c => c.classList.remove('selected'));
+          // Add selected class to clicked cell
+          this.classList.add('selected');
+          // Save selected date to hidden field
+          document.getElementById('selectedDate').value = this.getAttribute('data-date');
+          // Generate time slots for selected date
+          generateTimeSlots(this.getAttribute('data-date'));
+        });
+      });
+    }
+    
+    // Generate time slots
+    function generateTimeSlots(date) {
+      const container = document.getElementById('timeSlots');
+      container.innerHTML = '';
+      
+      // Generate time slots from 9:00 to 18:00 with 30-minute intervals
+      for (let hour = 9; hour < 18; hour++) {
+        for (let minute = 0; minute < 60; minute += 30) {
+          const time = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
+          const timeSlot = document.createElement('div');
+          timeSlot.className = 'time-slot';
+          timeSlot.textContent = time;
+          timeSlot.setAttribute('data-time', time);
+          
+          timeSlot.addEventListener('click', function() {
+            // Remove selected class from all time slots
+            container.querySelectorAll('.time-slot').forEach(ts => ts.classList.remove('selected'));
+            // Add selected class to clicked time slot
+            this.classList.add('selected');
+            // Save selected time to hidden field
+            document.getElementById('selectedTime').value = this.getAttribute('data-time');
+          });
+          
+          container.appendChild(timeSlot);
+        }
+      }
+    }
+    
+    // Initialize calendar
+    generateCalendar();
+
+    // accessible keyboard language switching
+    document.querySelectorAll('.lang-btn').forEach(b=>{
+      b.addEventListener('keydown', (e)=>{ if(e.key === 'Enter' || e.key === ' ') b.click(); });
+    });
+  </script>
+</body>
+</html>
